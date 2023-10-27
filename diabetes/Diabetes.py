@@ -12,7 +12,7 @@ import streamlit as st
 
 #loading the saved model
 #rb read binary file
-loaded_model=pickle.load(open("C:/Users/RINGROW/Documents/GitHub/Diabetes-Prediction/diabetes/model.sav",'rb'))
+loaded_model=pickle.load(open("C:/Users/RINGROW/Documents/GitHub/Diabetes-Prediction/diabetes/trained_model1.sav",'rb'))
 
 #creating a function for Prediction
 
@@ -41,10 +41,9 @@ def main():
     BloodPressure =st.text_input(" Blood Pressure level")
     SkinThickness=st.text_input("Skin Thickness")
     Insulin =st.text_input("What is your insulin")
-    Insulin_1 =st.text_input("What is your insulin 2")
     BMI=st.text_input("what is your BMI")
     DiabetesPedigreeFunction=st.text_input("Your Diabetes predigree function")
-    DiabetesPedigreeFunction_1=st.text_input("Your Diabetes predigree function 2")
+    
     
     
     
@@ -53,12 +52,19 @@ def main():
     
     #creating a button for prediction
     if st.button('Diabetes Prediction Result'):
-        Diabetes=DiabetesPrediction([Age, Glucose, Pregnancies, BloodPressure, SkinThickness, Insulin, BMI,Insulin_1, 
-                              DiabetesPedigreeFunction,DiabetesPedigreeFunction_1])
+        Diabetes=DiabetesPrediction([Age, Glucose, Pregnancies, BloodPressure, SkinThickness, Insulin, BMI, 
+                              DiabetesPedigreeFunction,])
     
     st.success(Diabetes)
+    
+    st.sidebar.header("User Feedback")
+feedback = st.sidebar.text_area("Provide feedback:")
+if st.sidebar.button("Submit Feedback"):
+    # Store user feedback in a database or file for analysis
+    with open("feedback.txt", "a") as f:
+        f.write(feedback + "\n")
         
-
+print("Thank you for your feedback")
 if __name__== '__main__':
     main()
 
